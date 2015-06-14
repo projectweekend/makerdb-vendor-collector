@@ -14,4 +14,4 @@ class CollectorItem(scrapy.Item):
     url = scrapy.Field()
     image_url = scrapy.Field()
     vendor_name = scrapy.Field()
-    vendor_id = scrapy.Field()
+    vendor_product_id = scrapy.Field()

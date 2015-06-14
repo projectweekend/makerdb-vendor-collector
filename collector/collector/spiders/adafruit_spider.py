@@ -1,5 +1,5 @@
 import scrapy
-import logging
+from collector.items import CollectorItem
 
 
 SITE_ROOT = 'http://www.adafruit.com'
@@ -28,39 +28,9 @@ class AdafruitSpider(scrapy.Spider):
         except IndexError:
             print('No product info for: {0}'.format(response.url))
         else:
-            parsed = {
-                'name': self.parse_product_name(info),
-                'url': response.url,
-                'image_url': response.urljoin(self.parse_product_image_url(info)),
-                'vendor_name': 'Adafruit',
-                'vendor_product_id': self.parse_product_vendor_id(info)
-            }
-            logging.info(parsed)
-
-    @staticmethod
-    def parse_product_name(product_info):
-        xpath = '//div[@id="prod-right-side"]/h1/text()'
-        try:
-            detail = product_info.xpath(xpath)[0]
-        except IndexError:
-            return None
-        return detail.extract().strip()
-
-    @staticmethod
-    def parse_product_image_url(product_info):
-        xpath = '//div[@id="prod-primary-img-container"]//img/@src'
-        try:
-            detail = product_info.xpath(xpath)[0]
-        except IndexError:
-            return None
-        return detail.extract().strip()
-
-    @staticmethod
-    def parse_product_vendor_id(product_info):
-        xpath = '//div[@class="product_id"]/text()'
-        try:
-            detail = product_info.xpath(xpath)[0]
-            parts = detail.extract().split(':')
-            return parts[1].strip()
-        except IndexError:
-            return None
+            yield CollectorItem(
+                name=info.xpath(self.xpath_for['name']).extract(),
+                url=response.url,
+                image_url=info.xpath(self.xpath_for['img_src']).extract(),
+                vendor_name='Adafruit',
+                vendor_product_id=info.xpath(self.xpath_for['vendor_product_id']).extract())

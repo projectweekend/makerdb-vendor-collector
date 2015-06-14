@@ -6,6 +6,7 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 
-class CollectorPipeline(object):
+class CollectorItemCompletePipeline(object):
+
     def process_item(self, item, spider):
         return item
