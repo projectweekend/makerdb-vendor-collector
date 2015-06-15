@@ -29,7 +29,7 @@ class ItemPipeline(object):
         if item['vendor_item_id'] and type(item['vendor_item_id']) == list:
             parts = item['vendor_item_id'][0].split(':')
             try:
-                item['vendor_item_id'] = parts[0].strip()
+                item['vendor_item_id'] = parts[1].strip()
             except IndexError:
                 raise DropItem('Invalid vendor_item_id')
         else:
