@@ -41,7 +41,7 @@ class AdafruitSpider(scrapy.Spider):
         'product_info': '//div[@class="row product-info"]',
         'name': '//div[@id="prod-right-side"]/h1/text()',
         'img_src': '//div[@id="prod-primary-img-container"]//img/@src',
-        'vendor_product_id': '//div[@class="product_id"]/text()'
+        'product_id': '//div[@class="product_id"]/text()'
     }
 
     def parse(self, response):
@@ -56,8 +56,8 @@ class AdafruitSpider(scrapy.Spider):
             print('No product info for: {0}'.format(response.url))
         else:
             yield CollectorItem(
-                name=info.xpath(self.xpath_for['name']).extract(),
-                url=response.url,
-                image_url=info.xpath(self.xpath_for['img_src']).extract(),
+                item_name=info.xpath(self.xpath_for['name']).extract(),
+                item_url=response.url,
+                item_image_url=info.xpath(self.xpath_for['img_src']).extract(),
                 vendor_name='Adafruit',
-                vendor_product_id=info.xpath(self.xpath_for['vendor_product_id']).extract())
+                vendor_item_id=info.xpath(self.xpath_for['product_id']).extract())
