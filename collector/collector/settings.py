@@ -62,7 +62,8 @@ NEWSPIDER_MODULE = 'collector.spiders'
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'collector.pipelines.CollectorItemCompletePipeline': 300,
+    'collector.pipelines.ItemPipeline': 300,
+    'collector.pipelines.DatabasePipeline': 400,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
