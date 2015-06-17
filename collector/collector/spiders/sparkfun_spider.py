@@ -2,7 +2,7 @@ import scrapy
 from collector.items import CollectorItem
 
 
-class AdafruitSpider(scrapy.Spider):
+class SparkfunSpider(scrapy.Spider):
 
     name = 'sparkfun'
     allowed_domains = ['sparkfun.com']
