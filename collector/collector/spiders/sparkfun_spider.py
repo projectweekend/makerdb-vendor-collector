@@ -49,9 +49,9 @@ class AdafruitSpider(scrapy.Spider):
             print('No product info for: {0}'.format(response.url))
         else:
             yield CollectorItem(
-                item_name=info.xpath(self.xpath_for['name']).extract(),
+                item_name=info.xpath(self.xpath_for['name']).extract_first(),
                 item_url=response.url,
-                item_image_url=info.xpath(self.xpath_for['img_src']).extract(),
-                vendor_site='https://www.adafruit.com',
-                vendor_name='Adafruit',
-                vendor_item_id=info.xpath(self.xpath_for['product_id']).extract())
+                item_image_url=info.xpath(self.xpath_for['img_src']).extract_first(),
+                vendor_site='https://www.sparkfun.com',
+                vendor_name='Sparkfun',
+                vendor_item_id=info.xpath(self.xpath_for['product_id']).extract_first())
