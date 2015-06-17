@@ -52,10 +52,21 @@ class AdafruitSpider(scrapy.Spider):
         except IndexError:
             print('No product info for: {0}'.format(response.url))
         else:
+            item_name = info.xpath(self.xpath_for['name']).extract_first().strip()
+            item_url = response.url
+            item_image_url = info.xpath(self.xpath_for['img_src']).extract_first().strip()
+            vendor_site = 'https://www.adafruit.com'
+            vendor_name = 'Adafruit'
+            vendor_item_id = info.xpath(self.xpath_for['product_id']).extract_first()
+            try:
+                vendor_item_id = vendor_item_id.split(':')[1].strip()
+            except IndexError:
+                vendor_item_id = ''
+
             yield CollectorItem(
-                item_name=info.xpath(self.xpath_for['name']).extract(),
-                item_url=response.url,
-                item_image_url=info.xpath(self.xpath_for['img_src']).extract(),
-                vendor_site='https://www.adafruit.com',
-                vendor_name='Adafruit',
-                vendor_item_id=info.xpath(self.xpath_for['product_id']).extract())
+                item_name=item_name,
+                item_url=item_url,
+                item_image_url=item_image_url,
+                vendor_site=vendor_site,
+                vendor_name=vendor_name,
+                vendor_item_id=vendor_item_id)
