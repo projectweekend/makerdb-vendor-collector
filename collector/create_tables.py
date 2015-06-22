@@ -9,8 +9,8 @@ def main():
         Table.create(
             'makerdb_vendor_items',
             schema=[
-                HashKey('vendor_item_id', data_type=STRING),
-                RangeKey('vendor_name', data_type=STRING)
+                HashKey('vendor_name', data_type=STRING),
+                RangeKey('vendor_item_id', data_type=STRING)
             ],
             throughput={
                 'read': 1,
